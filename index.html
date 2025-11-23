@@ -702,7 +702,7 @@
       }
     ];
 
-    // DATOS DEL QUIZ - Pueden editarse aquí
+    // DATOS DEL QUIZ - 10 PREGUNTAS - Pueden editarse aquí
     const quizQuestions = [
       {
         question: "¿Qué componente es conocido como el 'cerebro' de la computadora?",
@@ -727,6 +727,31 @@
       {
         question: "¿Qué tipo de memoria es volátil?",
         options: ["SSD", "HDD", "RAM", "USB"],
+        correct: 2
+      },
+      {
+        question: "¿Qué dispositivo opera en la Capa 2 del modelo OSI?",
+        options: ["Router", "Hub", "Switch", "Modem"],
+        correct: 2
+      },
+      {
+        question: "¿Qué significa la sigla DNS?",
+        options: ["Domain Name System", "Data Network Service", "Digital Network Security", "Dynamic Naming Service"],
+        correct: 0
+      },
+      {
+        question: "¿Cuál de estos es un tipo de topología de red?",
+        options: ["Estrella", "Circular", "Piramidal", "Vertical"],
+        correct: 0
+      },
+      {
+        question: "¿Qué componente almacena datos permanentemente?",
+        options: ["RAM", "CPU", "SSD", "Cache"],
+        correct: 2
+      },
+      {
+        question: "¿Qué protocolo es usado para enviar correos electrónicos?",
+        options: ["FTP", "HTTP", "SMTP", "TCP"],
         correct: 2
       }
     ];
@@ -811,7 +836,7 @@
             <h3>${layerData.name}</h3>
             <h4>Funciones:</h4>
             <ul>
-              ${layerData.functions.map(func => <li>${func}</li>).join('')}
+              ${layerData.functions.map(func => `<li>${func}</li>`).join('')}
             </ul>
             <h4>Ejemplos:</h4>
             <p>${layerData.examples}</p>
@@ -931,7 +956,7 @@
           connectDevices(selectedDevice, deviceId);
           
           // Restablecer selección
-          const prevDevice = document.querySelector([data-id="${selectedDevice}"]);
+          const prevDevice = document.querySelector(`[data-id="${selectedDevice}"]`);
           if (prevDevice) {
             prevDevice.style.borderColor = '#2563eb';
           }
@@ -950,8 +975,8 @@
         document.querySelectorAll('.connection').forEach(conn => conn.remove());
         
         connections.forEach(conn => {
-          const fromDevice = document.querySelector([data-id="${conn.from}"]);
-          const toDevice = document.querySelector([data-id="${conn.to}"]);
+          const fromDevice = document.querySelector(`[data-id="${conn.from}"]`);
+          const toDevice = document.querySelector(`[data-id="${conn.to}"]`);
           
           if (fromDevice && toDevice) {
             const fromRect = fromDevice.getBoundingClientRect();
@@ -971,7 +996,8 @@
             line.style.height = '100%';
             line.style.pointerEvents = 'none';
             line.className = 'connection';
-const path = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'line');
             path.setAttribute('x1', fromX);
             path.setAttribute('y1', fromY);
             path.setAttribute('x2', toX);
@@ -1066,14 +1092,14 @@ const path = document.createElementNS('http://www.w3.org/2000/svg', 'line');
       });
       
       function provideImmediateFeedback(questionIndex, selectedOption) {
-        const feedbackElement = document.getElementById(feedback-${questionIndex});
+        const feedbackElement = document.getElementById(`feedback-${questionIndex}`);
         const correctAnswer = quizQuestions[questionIndex].correct;
         
         if (selectedOption === correctAnswer) {
           feedbackElement.innerHTML = '<p style="color: green;">✓ Correcto!</p>';
           feedbackElement.className = 'feedback correct';
         } else {
-          feedbackElement.innerHTML = <p style="color: red;">✗ Incorrecto. La respuesta correcta es: ${quizQuestions[questionIndex].options[correctAnswer]}</p>;
+          feedbackElement.innerHTML = `<p style="color: red;">✗ Incorrecto. La respuesta correcta es: ${quizQuestions[questionIndex].options[correctAnswer]}</p>`;
           feedbackElement.className = 'feedback incorrect';
         }
       }
@@ -1134,6 +1160,44 @@ const path = document.createElementNS('http://www.w3.org/2000/svg', 'line');
       loadGlossary();
     });
   </script>
+  <script src='https://cdn.jotfor.ms/agent/embedjs/019aad8c95f6774fb99c93d9e3b83f25bbfc/embed.js'></script>
 </body>
 </html>
-<script src='https://cdn.jotfor.ms/agent/embedjs/019aad8c95f6774fb99c93d9e3b83f25bbfc/embed.js'></script>
+
+<!-- 
+INSTRUCCIONES PARA EDITAR EL PROYECTO:
+
+CÓMO CAMBIAR EL TÍTULO DEL PROYECTO:
+- Busque la línea: <title>Tecnología Educativa: Hardware y Redes</title>
+- Reemplace el texto entre las etiquetas <title> con el nuevo título
+
+CÓMO CAMBIAR EL NOMBRE DEL AUTOR:
+- Busque la sección "Ficha del Proyecto" en el HTML
+- Localice la línea: <p><strong>Autor:</strong> Juan Pérez</p>
+- Reemplace "Juan Pérez" con el nombre del autor
+
+CÓMO EDITAR LAS 10 PREGUNTAS DEL QUIZ:
+- Busque en el JavaScript la variable 'quizQuestions'
+- Modifique los arrays existentes o agregue nuevos objetos con la estructura:
+  {
+    question: "Texto de la pregunta",
+    options: ["Opción A", "Opción B", "Opción C", "Opción D"],
+    correct: índice_de_la_respuesta_correcta (0-3)
+  }
+
+CÓMO EDITAR/AGREGAR TÉRMINOS DEL GLOSARIO:
+- Busque en el JavaScript la variable 'glossaryTerms'
+- Modifique los objetos existentes o agregue nuevos con la estructura:
+  {
+    term: "Término",
+    definition: "Definición del término"
+  }
+
+CÓMO REEMPLAZAR IMÁGENES ONLINE:
+- Busque las etiquetas <img> en el HTML
+- Reemplace el atributo 'src' con la nueva URL absoluta de la imagen
+- Las imágenes deben estar en formato JPEG, PNG o SVG y estar alojadas públicamente
+
+NOTA: Todas las modificaciones se realizan en este mismo archivo HTML.
+No se requieren archivos externos ni herramientas adicionales.
+-->
