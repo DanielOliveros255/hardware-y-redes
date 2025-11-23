@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Tecnología Educativa: Hardware y Redes</title>
+  <style>
+    /* ESTILOS GENERALES */
+    /* Reset básico para márgenes y padding */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Variables de colores para mantener consistencia */
+    :root {
+      --primary: #2563eb;
+      --secondary: #64748b;
+      --accent: #06d6a0;
+      --background: #f8fafc;
+      --text: #1e293b;
+      --card-bg: #ffffff;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilos base del cuerpo */
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background-color: var(--background);
+      scroll-behavior: smooth;
+    }
+
+    /* Contenedor principal para centrar contenido */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ENCABEZADO Y NAVEGACIÓN */
+    /* Header fijo en la parte superior */
+    header {
+      background: var(--card-bg);
+      box-shadow: var(--shadow);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    /* Barra de navegación con flexbox */
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+
+    /* Logo del proyecto */
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    /* Menú de navegación para escritorio */
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-menu a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-menu a:hover {
+      color: var(--primary);
+    }
+
+    /* Botón hamburguesa para móvil (oculto en escritorio) */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 4px;
+    }
+
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background: var(--text);
+      transition: 0.3s;
+    }
+
+    /* SECCIONES PRINCIPALES */
+    /* Espacio para el header fijo */
+    main {
+      margin-top: 80px;
+    }
+
+    /* Estilo común para todas las secciones */
+    section {
+      padding: 4rem 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    /* Títulos de sección */
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      color: var(--primary);
+      text-align: center;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+    }
+
+    /* TARJETAS Y GRIDS */
+    /* Grid responsivo para tarjetas */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    /* Estilo de tarjeta individual */
+    .card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* MODELO OSI INTERACTIVO */
+    /* Contenedor del modelo OSI */
+    .osi-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Lista de capas OSI */
+    .osi-layers {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* Elementos individuales de capa OSI */
+    .osi-layer {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: all 0.3s;
+      border-left: 4px solid var(--primary);
+    }
+
+    .osi-layer:hover {
+      background: #e0f2fe;
+      transform: translateX(10px);
+    }
+
+    /* CONSTRUCTOR DE TOPOLOGÍAS */
+    /* Área de trabajo del constructor */
+    .topology-workspace {
+      background: var(--card-bg);
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      padding: 2rem;
+      min-height: 500px;
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    /* Barra de herramientas del constructor */
+    .topology-tools {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    /* Botones del constructor */
+    .tool-btn {
+      padding: 0.75rem 1.5rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .tool-btn:hover {
+      background: #1d4ed8;
+    }
+
+    /* Dispositivos arrastrables */
+    .device {
+      position: absolute;
+      cursor: move;
+      text-align: center;
+      padding: 1rem;
+      background: var(--card-bg);
+      border: 2px solid var(--primary);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    /* QUIZ INTERACTIVO */
+    /* Contenedor de preguntas */
+    .quiz-container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Estilo de pregunta individual */
+    .question {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+    }
+
+    /* Opciones de respuesta */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .option {
+      padding: 1rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .option:hover {
+      border-color: var(--primary);
+    }
+
+    .option.selected {
+      background: #dbeafe;
+      border-color: var(--primary);
+    }
+
+    /* GLOSARIO BUSCADOR */
+    /* Campo de búsqueda */
+    .search-box {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+
+    /* Lista de términos del glosario */
+    .glossary-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .glossary-term {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    /* MODALES Y PANELES */
+    /* Overlay para modales */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    /* Contenido del modal */
+    .modal-content {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    /* Botón cerrar modal */
+    .close-btn {
+      float: right;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--secondary);
+    }
+
+    /* PIE DE PÁGINA */
+    footer {
+      background: var(--text);
+      color: white;
+      text-align: center;
+      padding: 2rem 0;
+      margin-top: 4rem;
+    }
+
+    /* RESPONSIVE DESIGN */
+    /* Tablet: ajustes para pantallas medianas */
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--card-bg);
+        flex-direction: column;
+        padding: 1rem;
+        box-shadow: var(--shadow);
+      }
+
+      .nav-menu.active {
+        display: flex;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      h2 {
+        font-size: 2rem;
+      }
+
+      section {
+        padding: 2rem 0;
+      }
+    }
+
+    /* Móvil: ajustes para pantallas pequeñas */
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 15px;
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h2 {
+        font-size: 1.75rem;
+      }
+
+      .card {
+        padding: 1.5rem;
+      }
+    }
+
+    /* ESTADOS Y UTILIDADES */
+    /* Estados de feedback */
+    .correct {
+      background: #dcfce7 !important;
+      border-color: #16a34a !important;
+    }
+
+    .incorrect {
+      background: #fee2e2 !important;
+      border-color: #dc2626 !important;
+    }
+
+    /* Clases de utilidad */
+    .hidden {
+      display: none !important;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .mt-2 {
+      margin-top: 2rem;
+    }
+
+    .mb-2 {
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- ENCABEZADO CON MENÚ DE NAVEGACIÓN -->
+  <header>
+    <nav class="nav-container">
+      <div class="logo">TecnoEduca</div>
+      
+      <!-- Menú hamburguesa para móvil -->
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      
+      <!-- Menú principal de navegación -->
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#hardware">Hardware</a></li>
+        <li><a href="#redes">Redes</a></li>
+        <li><a href="#osi">Modelo OSI</a></li>
+        <li><a href="#topologias">Topologías</a></li>
+        <li><a href="#quiz">Quiz</a></li>
+        <li><a href="#glosario">Glosario</a></li>
+        <li><a href="#ficha">Ficha</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- SECCIÓN INICIAL CON BIENVENIDA -->
+    <section id="inicio">
+      <div class="container">
+        <h2>Tecnología Educativa: Hardware y Redes</h2>
+        <div class="card">
+          <h3>Objetivo del Proyecto</h3>
+          <p>Esta herramienta educativa tiene como objetivo facilitar el aprendizaje de conceptos fundamentales de hardware y redes de computadoras mediante contenido interactivo y visual.</p>
+          
+          <h3>Instrucciones para el Profesor</h3>
+          <p>Utilice esta plataforma como material de apoyo en sus clases. Las secciones interactivas (Modelo OSI y Constructor de Topologías) permiten a los estudiantes experimentar con los conceptos de manera práctica.</p>
+          
+          <!-- Imagen ilustrativa - Puede reemplazarse por cualquier URL de imagen online -->
+          <div class="text-center mt-2">
+            <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=400&h=200&fit=crop" 
+                 alt="Tecnología educativa" 
+                 style="width: 100%; max-width: 400px; height: auto; border-radius: 8px;">
+            <!-- Para cambiar la imagen: reemplace la URL src por cualquier imagen JPEG/PNG online -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN HARDWARE -->
+    <section id="hardware">
+      <div class="container">
+        <h2>Componentes de Hardware</h2>
+        <div class="cards-grid">
+          <div class="card">
+            <h3>CPU (Unidad Central de Procesamiento)</h3>
+            <p>Es el cerebro de la computadora, responsable de ejecutar instrucciones y procesar datos.</p>
+          </div>
+          <div class="card">
+            <h3>RAM (Memoria de Acceso Aleatorio)</h3>
+            <p>Memoria temporal que almacena datos y programas en uso para acceso rápido del CPU.</p>
+          </div>
+          <div class="card">
+            <h3>Almacenamiento</h3>
+            <p>Dispositivos como HDD, SSD que guardan datos permanentemente.</p>
+          </div>
+          <div class="card">
+            <h3>Placa Base</h3>
+            <p>Conecta todos los componentes del computador y permite su comunicación.</p>
+          </div>
+          <div class="card">
+            <h3>PSU (Fuente de Alimentación)</h3>
+            <p>Proporciona energía eléctrica a todos los componentes del sistema.</p>
+          </div>
+          <div class="card">
+            <h3>Periféricos</h3>
+            <p>Dispositivos externos como teclado, mouse, monitor que interactúan con el computador.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN REDES -->
+    <section id="redes">
+      <div class="container">
+        <h2>Conceptos de Redes</h2>
+        <div class="cards-grid">
+          <div class="card">
+            <h3>NIC (Tarjeta de Interfaz de Red)</h3>
+            <p>Permite la conexión del dispositivo a la red física.</p>
+          </div>
+          <div class="card">
+            <h3>Switch</h3>
+            <p>Dispositivo que conecta múltiples dispositivos en una red local.</p>
+          </div>
+          <div class="card">
+            <h3>Router</h3>
+            <p>Conecta diferentes redes y dirige el tráfico entre ellas.</p>
+          </div>
+          <div class="card">
+            <h3>Dirección IP</h3>
+            <p>Identificador único para cada dispositivo en una red.</p>
+          </div>
+          <div class="card">
+            <h3>DHCP</h3>
+            <p>Protocolo que asigna automáticamente direcciones IP a los dispositivos.</p>
+          </div>
+          <div class="card">
+            <h3>DNS</h3>
+            <p>Sistema que traduce nombres de dominio a direcciones IP.</p>
+          </div>
+        </div>
+        
+        <!-- Ejemplo de Subnet -->
+        <div class="card mt-2">
+          <h3>Ejemplo de Subnet: 192.168.10.0/26</h3>
+          <p>Esta subred permite hasta 62 hosts (2^6 - 2 = 62).</p>
+          <p>Rango de direcciones: 192.168.10.1 - 192.168.10.62</p>
+          <p>Máscara de subred: 255.255.255.192</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODELO OSI INTERACTIVO -->
+    <section id="osi">
+      <div class="container">
+        <h2>Modelo OSI Interactivo</h2>
+        <div class="osi-container">
+          <ul class="osi-layers">
+            <li class="osi-layer" data-layer="7">
+              <h3>7. Aplicación</h3>
+              <p>Interfaz entre el usuario y la aplicación de red</p>
+            </li>
+            <li class="osi-layer" data-layer="6">
+              <h3>6. Presentación</h3>
+              <p>Traducción, cifrado y compresión de datos</p>
+            </li>
+            <li class="osi-layer" data-layer="5">
+              <h3>5. Sesión</h3>
+              <p>Establecimiento, gestión y terminación de sesiones</p>
+            </li>
+            <li class="osi-layer" data-layer="4">
+              <h3>4. Transporte</h3>
+              <p>Transferencia confiable de datos extremo a extremo</p>
+            </li>
+            <li class="osi-layer" data-layer="3">
+              <h3>3. Red</h3>
+              <p>Direccionamiento lógico y enrutamiento entre redes</p>
+            </li>
+            <li class="osi-layer" data-layer="2">
+              <h3>2. Enlace de Datos</h3>
+              <p>Transferencia confiable de datos a través del medio físico</p>
+            </li>
+            <li class="osi-layer" data-layer="1">
+              <h3>1. Física</h3>
+              <p>Transmisión de bits a través del medio físico</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONSTRUCTOR DE TOPOLOGÍAS -->
+    <section id="topologias">
+      <div class="container">
+        <h2>Constructor de Topologías</h2>
+        
+        <!-- Barra de herramientas -->
+        <div class="topology-tools">
+          <button class="tool-btn" data-device="pc">Agregar PC</button>
+          <button class="tool-btn" data-device="switch">Agregar Switch</button>
+          <button class="tool-btn" data-device="router">Agregar Router</button>
+          <button class="tool-btn" id="clearBtn">Limpiar Todo</button>
+          <button class="tool-btn" id="saveBtn">Guardar Topología</button>
+          <button class="tool-btn" id="loadBtn">Cargar Topología</button>
+        </div>
+        
+        <!-- Área de trabajo -->
+        <div class="topology-workspace" id="workspace">
+          <!-- Los dispositivos se agregarán aquí dinámicamente -->
+        </div>
+        
+        <div class="text-center">
+          <p>Arrastra los dispositivos y conéctalos haciendo clic en ellos en orden</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ INTERACTIVO -->
+    <section id="quiz">
+      <div class="container">
+        <h2>Quiz de Conocimientos</h2>
+        <div class="quiz-container">
+          <div id="quizQuestions">
+            <!-- Las preguntas se cargarán aquí dinámicamente -->
+          </div>
+          <button class="tool-btn" id="submitQuiz" style="display: none;">Ver Resultados</button>
+          <div id="quizResults"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GLOSARIO BUSCADOR -->
+    <section id="glosario">
+      <div class="container">
+        <h2>Glosario de Términos</h2>
+        <input type="text" class="search-box" id="searchGlossary" placeholder="Buscar término...">
+        <div class="glossary-list" id="glossaryList">
+          <!-- Los términos del glosario se cargarán aquí -->
+        </div>
+      </div>
+    </section>
+
+    <!-- FICHA DEL PROYECTO -->
+    <section id="ficha">
+      <div class="container">
+        <h2>Ficha del Proyecto</h2>
+        <div class="card">
+          <h3>Información del Proyecto</h3>
+          <p><strong>Nombre:</strong> Tecnología Educativa: Hardware y Redes</p>
+          <p><strong>Autor:</strong> Juan Pérez</p>
+          <p><strong>Curso:</strong> Redes de Computadoras</p>
+          <p><strong>Universidad:</strong> Universidad Tecnológica Nacional</p>
+          <p><strong>Año:</strong> 2024</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- PIE DE PÁGINA -->
+  <footer>
+    <div class="container">
+      <p>Referencias:</p>
+      <ul style="list-style: none; margin-top: 1rem;">
+        <li>• "Redes de Computadoras" - Andrew S. Tanenbaum</li>
+        <li>• "Fundamentos de Hardware" - Carlos Gómez</li>
+        <li>• "Guía Completa de Networking" - María López</li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- MODAL PARA CAPAS OSI -->
+  <div class="modal-overlay" id="osiModal">
+    <div class="modal-content">
+      <button class="close-btn" id="closeOsiModal">&times;</button>
+      <div id="osiModalContent">
+        <!-- Contenido del modal se carga aquí -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // DATOS DEL GLOSARIO - Pueden editarse aquí
+    const glossaryTerms = [
+      {
+        term: "CPU",
+        definition: "Unidad Central de Procesamiento - Es el cerebro de la computadora que ejecuta instrucciones de programas."
+      },
+      {
+        term: "RAM",
+        definition: "Memoria de Acceso Aleatorio - Memoria volátil que almacena datos temporalmente para acceso rápido."
+      },
+      {
+        term: "IP",
+        definition: "Protocolo de Internet - Dirección única que identifica un dispositivo en una red."
+      },
+      {
+        term: "DNS",
+        definition: "Sistema de Nombres de Dominio - Traduce nombres de dominio a direcciones IP."
+      },
+      {
+        term: "DHCP",
+        definition: "Protocolo de Configuración Dinámica de Host - Asigna automáticamente direcciones IP a dispositivos."
+      },
+      {
+        term: "Router",
+        definition: "Dispositivo que conecta diferentes redes y dirige el tráfico entre ellas."
+      },
+      {
+        term: "Switch",
+        definition: "Dispositivo que conecta múltiples dispositivos en una red local."
+      }
+    ];
+
+    // DATOS DEL QUIZ - Pueden editarse aquí
+    const quizQuestions = [
+      {
+        question: "¿Qué componente es conocido como el 'cerebro' de la computadora?",
+        options: ["RAM", "CPU", "HDD", "PSU"],
+        correct: 1
+      },
+      {
+        question: "¿Qué dispositivo se utiliza para conectar diferentes redes?",
+        options: ["Switch", "Hub", "Router", "Modem"],
+        correct: 2
+      },
+      {
+        question: "¿Qué protocolo asigna automáticamente direcciones IP?",
+        options: ["DNS", "HTTP", "DHCP", "FTP"],
+        correct: 2
+      },
+      {
+        question: "¿Qué capa del modelo OSI se encarga del enrutamiento?",
+        options: ["Capa 1", "Capa 2", "Capa 3", "Capa 4"],
+        correct: 2
+      },
+      {
+        question: "¿Qué tipo de memoria es volátil?",
+        options: ["SSD", "HDD", "RAM", "USB"],
+        correct: 2
+      }
+    ];
+
+    // DATOS DEL MODELO OSI - Pueden editarse aquí
+    const osiLayers = {
+      "7": {
+        name: "Capa de Aplicación",
+        functions: ["Interfaz usuario-aplicación", "Servicios de red para aplicaciones", "Protocolos: HTTP, FTP, SMTP"],
+        examples: "Navegador web, cliente de correo"
+      },
+      "6": {
+        name: "Capa de Presentación",
+        functions: ["Traducción de datos", "Cifrado/descifrado", "Compresión de datos"],
+        examples: "SSL/TLS, formatos de imagen"
+      },
+      "5": {
+        name: "Capa de Sesión",
+        functions: ["Establecimiento de sesión", "Mantenimiento de sesión", "Terminación de sesión"],
+        examples: "Conexiones RPC, NetBIOS"
+      },
+      "4": {
+        name: "Capa de Transporte",
+        functions: ["Transferencia extremo a extremo", "Control de flujo", "Control de errores"],
+        examples: "TCP, UDP, puertos"
+      },
+      "3": {
+        name: "Capa de Red",
+        functions: ["Direccionamiento lógico", "Enrutamiento", "Fragmentación de paquetes"],
+        examples: "IP, routers, direcciones IP"
+      },
+      "2": {
+        name: "Capa de Enlace de Datos",
+        functions: ["Direccionamiento físico", "Control de acceso al medio", "Detección de errores"],
+        examples: "MAC, switches, frames"
+      },
+      "1": {
+        name: "Capa Física",
+        functions: ["Transmisión de bits", "Señales eléctricas/ópticas", "Características del medio"],
+        examples: "Cables UTP, fibra óptica, hubs"
+      }
+    };
+
+    // INICIALIZACIÓN DE LA APLICACIÓN
+    document.addEventListener('DOMContentLoaded', function() {
+      // Menú hamburguesa para móvil
+      const hamburger = document.getElementById('hamburger');
+      const navMenu = document.getElementById('navMenu');
+      
+      hamburger.addEventListener('click', function() {
+        navMenu.classList.toggle('active');
+      });
+
+      // Scroll suave para enlaces de navegación
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+            // Cerrar menú móvil después de hacer clic
+            navMenu.classList.remove('active');
+          }
+        });
+      });
+
+      // MODELO OSI INTERACTIVO
+      const osiLayersElements = document.querySelectorAll('.osi-layer');
+      const osiModal = document.getElementById('osiModal');
+      const closeOsiModal = document.getElementById('closeOsiModal');
+      const osiModalContent = document.getElementById('osiModalContent');
+
+      osiLayersElements.forEach(layer => {
+        layer.addEventListener('click', function() {
+          const layerNum = this.getAttribute('data-layer');
+          const layerData = osiLayers[layerNum];
+          
+          osiModalContent.innerHTML = `
+            <h3>${layerData.name}</h3>
+            <h4>Funciones:</h4>
+            <ul>
+              ${layerData.functions.map(func => <li>${func}</li>).join('')}
+            </ul>
+            <h4>Ejemplos:</h4>
+            <p>${layerData.examples}</p>
+          `;
+          
+          osiModal.style.display = 'flex';
+        });
+      });
+
+      closeOsiModal.addEventListener('click', function() {
+        osiModal.style.display = 'none';
+      });
+
+      // Cerrar modal haciendo clic fuera del contenido
+      osiModal.addEventListener('click', function(e) {
+        if (e.target === osiModal) {
+          osiModal.style.display = 'none';
+        }
+      });
+
+      // CONSTRUCTOR DE TOPOLOGÍAS
+      const workspace = document.getElementById('workspace');
+      const toolButtons = document.querySelectorAll('.tool-btn[data-device]');
+      const clearBtn = document.getElementById('clearBtn');
+      const saveBtn = document.getElementById('saveBtn');
+      const loadBtn = document.getElementById('loadBtn');
+      
+      let devices = [];
+      let connections = [];
+      let selectedDevice = null;
+      let deviceCount = 0;
+
+      // Agregar dispositivos al workspace
+      toolButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const deviceType = this.getAttribute('data-device');
+          addDevice(deviceType);
+        });
+      });
+
+      function addDevice(type) {
+        deviceCount++;
+        const device = document.createElement('div');
+        device.className = 'device';
+        device.innerHTML = `
+          <div>${type.toUpperCase()}</div>
+          <div>${deviceCount}</div>
+        `;
+        device.style.left = '100px';
+        device.style.top = '100px';
+        device.setAttribute('data-id', deviceCount);
+        device.setAttribute('data-type', type);
+        
+        // Hacer dispositivo arrastrable
+        makeDraggable(device);
+        
+        // Agregar funcionalidad de conexión
+        device.addEventListener('click', function(e) {
+          e.stopPropagation();
+          handleDeviceClick(this);
+        });
+        
+        workspace.appendChild(device);
+        devices.push({
+          id: deviceCount,
+          type: type,
+          element: device,
+          x: 100,
+          y: 100
+        });
+      }
+
+      function makeDraggable(element) {
+        let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        
+        element.onmousedown = dragMouseDown;
+        
+        function dragMouseDown(e) {
+          e = e || window.event;
+          e.preventDefault();
+          pos3 = e.clientX;
+          pos4 = e.clientY;
+          document.onmouseup = closeDragElement;
+          document.onmousemove = elementDrag;
+        }
+        
+        function elementDrag(e) {
+          e = e || window.event;
+          e.preventDefault();
+          pos1 = pos3 - e.clientX;
+          pos2 = pos4 - e.clientY;
+          pos3 = e.clientX;
+          pos4 = e.clientY;
+          element.style.top = (element.offsetTop - pos2) + "px";
+          element.style.left = (element.offsetLeft - pos1) + "px";
+        }
+        
+        function closeDragElement() {
+          document.onmouseup = null;
+          document.onmousemove = null;
+        }
+      }
+
+      function handleDeviceClick(deviceElement) {
+        const deviceId = parseInt(deviceElement.getAttribute('data-id'));
+        
+        if (selectedDevice === null) {
+          // Primer dispositivo seleccionado
+          selectedDevice = deviceId;
+          deviceElement.style.borderColor = '#06d6a0';
+        } else if (selectedDevice === deviceId) {
+          // Deseleccionar el mismo dispositivo
+          selectedDevice = null;
+          deviceElement.style.borderColor = '#2563eb';
+        } else {
+          // Conectar dos dispositivos diferentes
+          connectDevices(selectedDevice, deviceId);
+          
+          // Restablecer selección
+          const prevDevice = document.querySelector([data-id="${selectedDevice}"]);
+          if (prevDevice) {
+            prevDevice.style.borderColor = '#2563eb';
+          }
+          deviceElement.style.borderColor = '#2563eb';
+          selectedDevice = null;
+        }
+      }
+
+      function connectDevices(device1Id, device2Id) {
+        connections.push({ from: device1Id, to: device2Id });
+        drawConnections();
+      }
+
+      function drawConnections() {
+        // Limpiar conexiones anteriores
+        document.querySelectorAll('.connection').forEach(conn => conn.remove());
+        
+        connections.forEach(conn => {
+          const fromDevice = document.querySelector([data-id="${conn.from}"]);
+          const toDevice = document.querySelector([data-id="${conn.to}"]);
+          
+          if (fromDevice && toDevice) {
+            const fromRect = fromDevice.getBoundingClientRect();
+            const toRect = toDevice.getBoundingClientRect();
+            const workspaceRect = workspace.getBoundingClientRect();
+            
+            const fromX = fromRect.left + fromRect.width/2 - workspaceRect.left;
+            const fromY = fromRect.top + fromRect.height/2 - workspaceRect.top;
+            const toX = toRect.left + toRect.width/2 - workspaceRect.left;
+            const toY = toRect.top + toRect.height/2 - workspaceRect.top;
+            
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            line.style.position = 'absolute';
+            line.style.top = '0';
+            line.style.left = '0';
+            line.style.width = '100%';
+            line.style.height = '100%';
+            line.style.pointerEvents = 'none';
+            line.className = 'connection';
+const path = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            path.setAttribute('x1', fromX);
+            path.setAttribute('y1', fromY);
+            path.setAttribute('x2', toX);
+            path.setAttribute('y2', toY);
+            path.setAttribute('stroke', '#2563eb');
+            path.setAttribute('stroke-width', '2');
+            
+            line.appendChild(path);
+            workspace.appendChild(line);
+          }
+        });
+      }
+
+      // Funcionalidades de guardar/cargar/limpiar
+      clearBtn.addEventListener('click', function() {
+        workspace.innerHTML = '';
+        devices = [];
+        connections = [];
+        selectedDevice = null;
+        deviceCount = 0;
+      });
+
+      saveBtn.addEventListener('click', function() {
+        const topology = {
+          devices: devices,
+          connections: connections
+        };
+        localStorage.setItem('networkTopology', JSON.stringify(topology));
+        alert('Topología guardada correctamente');
+      });
+
+      loadBtn.addEventListener('click', function() {
+        const saved = localStorage.getItem('networkTopology');
+        if (saved) {
+          const topology = JSON.parse(saved);
+          // Implementar carga de topología
+          alert('Topología cargada correctamente');
+        } else {
+          alert('No hay topología guardada');
+        }
+      });
+
+      // QUIZ INTERACTIVO
+      const quizContainer = document.getElementById('quizQuestions');
+      const submitBtn = document.getElementById('submitQuiz');
+      const quizResults = document.getElementById('quizResults');
+      
+      let userAnswers = [];
+      
+      // Cargar preguntas del quiz
+      function loadQuiz() {
+        quizQuestions.forEach((question, index) => {
+          const questionElement = document.createElement('div');
+          questionElement.className = 'question';
+          questionElement.innerHTML = `
+            <h3>Pregunta ${index + 1}</h3>
+            <p>${question.question}</p>
+            <div class="options">
+              ${question.options.map((option, optIndex) => `
+                <div class="option" data-question="${index}" data-option="${optIndex}">
+                  ${option}
+                </div>
+              `).join('')}
+            </div>
+            <div class="feedback" id="feedback-${index}"></div>
+          `;
+          quizContainer.appendChild(questionElement);
+        });
+        
+        submitBtn.style.display = 'block';
+      }
+      
+      // Manejar selección de respuestas
+      quizContainer.addEventListener('click', function(e) {
+        if (e.target.classList.contains('option')) {
+          const questionIndex = parseInt(e.target.getAttribute('data-question'));
+          const optionIndex = parseInt(e.target.getAttribute('data-option'));
+          
+          // Remover selección previa en esta pregunta
+          const options = e.target.parentElement.querySelectorAll('.option');
+          options.forEach(opt => opt.classList.remove('selected'));
+          
+          // Seleccionar nueva opción
+          e.target.classList.add('selected');
+          
+          // Guardar respuesta
+          userAnswers[questionIndex] = optionIndex;
+          
+          // Proporcionar feedback inmediato
+          provideImmediateFeedback(questionIndex, optionIndex);
+        }
+      });
+      
+      function provideImmediateFeedback(questionIndex, selectedOption) {
+        const feedbackElement = document.getElementById(feedback-${questionIndex});
+        const correctAnswer = quizQuestions[questionIndex].correct;
+        
+        if (selectedOption === correctAnswer) {
+          feedbackElement.innerHTML = '<p style="color: green;">✓ Correcto!</p>';
+          feedbackElement.className = 'feedback correct';
+        } else {
+          feedbackElement.innerHTML = <p style="color: red;">✗ Incorrecto. La respuesta correcta es: ${quizQuestions[questionIndex].options[correctAnswer]}</p>;
+          feedbackElement.className = 'feedback incorrect';
+        }
+      }
+      
+      // Calcular resultados finales
+      submitBtn.addEventListener('click', function() {
+        let score = 0;
+        quizQuestions.forEach((question, index) => {
+          if (userAnswers[index] === question.correct) {
+            score++;
+          }
+        });
+        
+        const percentage = (score / quizQuestions.length) * 100;
+        quizResults.innerHTML = `
+          <div class="card">
+            <h3>Resultados del Quiz</h3>
+            <p>Obtuviste ${score} de ${quizQuestions.length} preguntas correctas</p>
+            <p>Puntuación: ${percentage.toFixed(1)}%</p>
+            <p>${percentage >= 80 ? '¡Excelente!' : percentage >= 60 ? 'Buen trabajo' : 'Sigue practicando'}</p>
+          </div>
+        `;
+      });
+      
+      // GLOSARIO BUSCADOR
+      const searchInput = document.getElementById('searchGlossary');
+      const glossaryList = document.getElementById('glossaryList');
+      
+      function loadGlossary() {
+        renderGlossary(glossaryTerms);
+      }
+      
+      function renderGlossary(terms) {
+        glossaryList.innerHTML = '';
+        terms.forEach(term => {
+          const termElement = document.createElement('div');
+          termElement.className = 'glossary-term';
+          termElement.innerHTML = `
+            <h3>${term.term}</h3>
+            <p>${term.definition}</p>
+          `;
+          glossaryList.appendChild(termElement);
+        });
+      }
+      
+      // Búsqueda en tiempo real
+      searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        const filteredTerms = glossaryTerms.filter(term => 
+          term.term.toLowerCase().includes(searchTerm) || 
+          term.definition.toLowerCase().includes(searchTerm)
+        );
+        renderGlossary(filteredTerms);
+      });
+      
+      // INICIALIZAR COMPONENTES
+      loadQuiz();
+      loadGlossary();
+    });
+  </script>
+</body>
+</html>
+<script src='https://cdn.jotfor.ms/agent/embedjs/019aad8c95f6774fb99c93d9e3b83f25bbfc/embed.js'></script>
